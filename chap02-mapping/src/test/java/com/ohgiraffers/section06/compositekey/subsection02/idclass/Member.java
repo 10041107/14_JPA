@@ -2,24 +2,24 @@ package com.ohgiraffers.section06.compositekey.subsection02.idclass;
 
 import jakarta.persistence.*;
 
-@Entity(name = "member_section06_subsection01")
-@Table(name = "tbl_member_section06_subsection01")
-@IdClass(MemberPK.class)
+@Entity(name = "member_section06_subsection02")
+@Table(name = "tbl_member_section06_subsection02")
+@IdClass(MemberPk.class)         // 잘 안씀
 public class Member {
 
     @Id
     @Column(name = "member_no")
     private int memberNo;
 
+    @Id
     @Column(name = "member_id")
     private String memberId;
 
     @Column(name = "phone")
-    private String Phone;
+    private String phone;
 
     @Column(name = "address")
-    private String Address;
-
+    private String address;
 
     public Member() {
     }
@@ -27,8 +27,8 @@ public class Member {
     public Member(int memberNo, String memberId, String phone, String address) {
         this.memberNo = memberNo;
         this.memberId = memberId;
-        Phone = phone;
-        Address = address;
+        this.phone = phone;
+        this.address = address;
     }
 
     public int getMemberNo() {
@@ -48,19 +48,19 @@ public class Member {
     }
 
     public String getPhone() {
-        return Phone;
+        return phone;
     }
 
     public void setPhone(String phone) {
-        Phone = phone;
+        this.phone = phone;
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
     public void setAddress(String address) {
-        Address = address;
+        this.address = address;
     }
 
     @Override
@@ -68,9 +68,8 @@ public class Member {
         return "Member{" +
                 "memberNo=" + memberNo +
                 ", memberId='" + memberId + '\'' +
-                ", Phone='" + Phone + '\'' +
-                ", Address='" + Address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }
-

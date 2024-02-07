@@ -1,4 +1,4 @@
-package com.ohgiraffers.section03.primaryKey.subsection02.table;
+package com.ohgiraffers.section03.primarykey.subsection02.table;
 
 
 import jakarta.persistence.EntityManager;
@@ -10,9 +10,8 @@ import org.junit.jupiter.api.*;
 import java.util.Date;
 import java.util.List;
 
-public class sequenceTableMappingTests {
-
-    private static EntityManagerFactory entityManagerFactory;
+public class SequenceTableMappingTests {
+    private static EntityManagerFactory entityManagerFactory;  // 싱글톤 리소스를 줄이기 위해
     private EntityManager entityManager;
 
     @BeforeAll
@@ -35,10 +34,6 @@ public class sequenceTableMappingTests {
         entityManager.close();
     }
 
-    /*
-
-
-     */
 
     /* IDENTITY 전략 */
     @Test
@@ -48,17 +43,17 @@ public class sequenceTableMappingTests {
         Member member = new Member();
         member.setMemberId("user01");
         member.setMemberPwd("pass01");
-        member.setNickname("홍길동");
+        member.setNickName("홍길동");
         member.setPhone("010-1234-5678");
         member.setAddress("서울시 종로구");
         member.setEnrollDate(new Date());
         member.setMemberRole("ROLE_MEMBER");
         member.setStatus("Y");
 
-        Member member2 = new Member();
+      Member member2 = new Member();
         member2.setMemberId("user02");
         member2.setMemberPwd("pass02");
-        member2.setNickname("유관순");
+        member2.setNickName("유관순");
         member2.setPhone("010-1234-5678");
         member2.setAddress("서울시 종로구");
         member2.setEnrollDate(new Date());
@@ -73,16 +68,11 @@ public class sequenceTableMappingTests {
         entityTransaction.commit();
 
         //then
-        String jpql = "SELECT A.memberNo FROM menber_section03_subsection02 A";
-        List<Integer> memberNoList = entityManager.createQuery(jpql, Integer.class).getResultList();
+        String jpql = "SELECT A.memberNo FROM member_section03_subsection02 A";
+        List<Integer> memberNoList = entityManager.createQuery(jpql, Integer.class/*pk는 null일 수 없기에 int로 */).getResultList();
 
         memberNoList.forEach(System.out::println);
 
     }
-
-
-
-
-
 
 }

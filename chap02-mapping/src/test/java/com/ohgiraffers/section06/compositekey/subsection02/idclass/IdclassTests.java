@@ -6,10 +6,8 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class IdclassTests {
-    private static EntityManagerFactory entityManagerFactory;
+public class IdClassTests {
+    private static EntityManagerFactory entityManagerFactory;  // 싱글톤 리소스를 줄이기 위해
     private EntityManager entityManager;
 
     @BeforeAll
@@ -32,21 +30,22 @@ public class IdclassTests {
         entityManager.close();
     }
 
-    /*
-    복합키가 존재하는 테이블 매핑의 경우 별도의 방법이 필요하다.
-    1. @Embeddable : @Embeddable클래스에 복합 키를 정의하고 엔터티에 @EmbeddedId를 이용해 복합키 클래스를 매핑한다.
-    2. @IdCLass: 복합키를 필드로 정의한 클래스를 이용해 엔터티 클래스에 복합키에 해당하는 필드에 @ID를 매핑한다.
-
-    두 방식 모두 복합키 클래스는 영속성 컨텍스트가 관리하지 않는다는 특징이 있으며, 큰 기능적 차이도 존재하지 않는다.
-     */
+ /*
+ *  복합키가 존재하는 테이블 매핑의 경우 별도의 방법이 필요하다.
+ *  1. @Embeddable : @Embeddable 클래스에 복합 키를 정의하고 엔티티에 @EmbeddedId를 이용해 복합 키 클래스를 매핑한다.
+ *  2. @IdClass : 복합 키를 필드로 정의한 클래스를 이용해 엔티티 클래스에 복합키에 해당하는 필드에 @Id를 매핑한다.
+ *
+ *  두 방식 모두 복합키 클래스는 영속성 컨텍스트가 관리하지 않는다는 특징이 있으며, 큰 기능적 차이도 존재하지 않는다.
+ * */
 
     @Test
-    public void 아이디_클래스_사용한_복합키_테이블_매핑_테스트(){
+    public void 아이디_클래스_사용한_복합키_테이블_매핑_테스트() {
         //given
+
         Member member = new Member();
         member.setMemberNo(1);
         member.setMemberId("user01");
-        member.setPhone("010-0000-0000");
+        member.setPhone("010-1234-5678");
         member.setAddress("서울시 종로구");
 
         //when
@@ -56,8 +55,8 @@ public class IdclassTests {
         entityTransaction.commit();
 
         //then
-        Member foundMember = entityManager.find(Member.class, new MemberPK(1,"user01"));
-        assertEquals(member, foundMember);
+        Member foundMember = entityManager.find(Member.class, new MemberPk(1,"user01"));
+        Assertions.assertEquals(member, foundMember);
     }
 
 

@@ -1,60 +1,62 @@
 package com.ohgiraffers.section06.compositekey.subsection01.embedded;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 @Entity(name = "member_section06_subsection01")
 @Table(name = "tbl_member_section06_subsection01")
 public class Member {
 
     @EmbeddedId
-    private MemberPK memberPK;
+    private MemberPk memberPk;
 
     @Column(name = "phone")
-    private String Phone;
+    private String phone;
 
     @Column(name = "address")
-    private String Address;
-
+    private String address;
 
     public Member() {
     }
 
-    public Member(MemberPK memberPK, String phone, String address) {
-        this.memberPK = memberPK;
-        Phone = phone;
-        Address = address;
+    public Member(MemberPk memberPk, String phone, String address) {
+        this.memberPk = memberPk;
+        this.phone = phone;
+        this.address = address;
     }
 
-    public MemberPK getMemberPK() {
-        return memberPK;
+    public MemberPk getMemberPk() {
+        return memberPk;
     }
 
-    public void setMemberPK(MemberPK memberPK) {
-        this.memberPK = memberPK;
+    public void setMemberPk(MemberPk memberPk) {
+        this.memberPk = memberPk;
     }
 
     public String getPhone() {
-        return Phone;
+        return phone;
     }
 
     public void setPhone(String phone) {
-        Phone = phone;
+        this.phone = phone;
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
     public void setAddress(String address) {
-        Address = address;
+        this.address = address;
     }
 
     @Override
     public String toString() {
         return "Member{" +
-                "memberPK=" + memberPK +
-                ", Phone='" + Phone + '\'' +
-                ", Address='" + Address + '\'' +
+                "memberPk=" + memberPk +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }

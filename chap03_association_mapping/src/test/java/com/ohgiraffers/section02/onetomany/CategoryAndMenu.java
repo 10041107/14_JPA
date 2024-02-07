@@ -86,9 +86,17 @@ public class CategoryAndMenu {
 //    }
 
 
+    public List<Menu> getMenuList() {
+        return menuList;
+    }
+
+    public void setMenuList(List<Menu> menuList) {
+        this.menuList = menuList;
+    }
+
     @Override
     public String toString() {
-        return "CategoryAndMenu{" +
+        return "Category{" +
                 "categoryCode=" + categoryCode +
                 ", categoryName='" + categoryName + '\'' +
                 ", refCategoryCode=" + refCategoryCode +

@@ -1,4 +1,4 @@
-package com.ohgiraffers.section03.primaryKey.subsection01.identity;
+package com.ohgiraffers.section03.primarykey.subsection01.identity;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -10,8 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 public class PrimaryKeyMappingTests {
-
-    private static EntityManagerFactory entityManagerFactory;
+    private static EntityManagerFactory entityManagerFactory;  // 싱글톤 리소스를 줄이기 위해
     private EntityManager entityManager;
 
     @BeforeAll
@@ -35,22 +34,24 @@ public class PrimaryKeyMappingTests {
     }
 
     /*
+    *   Primary Key에는 @id 어노테이션 @GeneratedValue 어노테이션을 사용한다.
+    *   @ID 어노테이션은 엔티티 클래스에서 Primary key 역할을 하는 필드를 지정할 때 사용한다.
+    *   @GeneratedValue 어노테이션을 함께 사용하면 primary key 값을 자동으로 생성할 수 있다.
+    *
+    *   데이터베이스마다 기본 키를 생성하는 방식이 서로 다르다.
+    *   @GeneratedValue 어노테이션은 다음과 같은 속성을 가지고 있다.
+    *
+    *   - strategy : 자동 생성 전략을 지정
+    *   - GenerationType.IDENTITY : 기본 키 생성을 데이터베이스에 위임 (MySQL 의 AUTO_INCREMENT)
+    *   - GenerationType.SEQUENCE : 데이터베이스 시퀀스 객체 사용 (ORACLE 의 SEQUENCE)
+    *   - GenerationType.TABLE : 키 생성 테이블 사용
+    *   - GenerationType.AUTO : 자동 선택 (MYSQL 이라면 IDENTITY, ORACLE 이라면 SEQUENCE로 선택)
+    *   - generator : strategy 값을 GenerationType.TABLE 로 지정한 경우 사용 되는 테이블 이름을 지정
+    *   - initialValue : strategy 값을 GenerationType.SEQUENCE 로 지정한 경우 시퀀스 초기 값을 지정
+    *   - allocationSize : strategy 값을 GenerationType.SEQUENCE 로 지정한 경우 시퀀스 증가치를 지정
+    * */
 
-    Primary key에는 @ID어노테이션과 @GeneratedValue어노테이션을 사용한다.
-    @Id 어노테이션은 JPA(Java Persistence API)에서 엔티티 클래스의 Primary Key를 나타내는 필드에 사용됩니다.
-    @GeneratedValue 어노테이션은 이 Primary Key의 값을 자동으로 생성하기 위해 사용됩니다.
 
-    아래는 @GeneratedValue 어노테이션의 속성에 대한 설명입니다:
-
-    strategy: 자동 생성 전략을 지정합니다.
-    GenerationType.IDENTITY: 기본 키 생성을 데이터베이스에 위임합니다 (예: MySQL의 AUTO_INCREMENT).
-    GenerationType.SEQUENCE: 데이터베이스 시퀀스 객체를 사용합니다 (예: Oracle의 SEQUENCE).
-    GenerationType.TABLE: 키 생성 테이블을 사용합니다.
-    GenerationType.AUTO: 데이터베이스에 따라 자동으로 선택됩니다 (예: MySQL이면 IDENTITY, Oracle이면 SEQUENCE로 선택).
-    generator: strategy 값이 GenerationType.TABLE로 지정된 경우 사용할 테이블의 이름을 지정합니다.
-    initialValue: strategy 값이 GenerationType.SEQUENCE로 지정된 경우 시퀀스의 초기값을 지정합니다.
-    allocationSize: strategy 값이 GenerationType.SEQUENCE로 지정된 경우 시퀀스의 증가치를 지정합니다.
-     */
 
     /* IDENTITY 전략 */
     @Test
@@ -60,7 +61,7 @@ public class PrimaryKeyMappingTests {
         Member member = new Member();
         member.setMemberId("user01");
         member.setMemberPwd("pass01");
-        member.setNickname("홍길동");
+        member.setNickName("홍길동");
         member.setPhone("010-1234-5678");
         member.setAddress("서울시 종로구");
         member.setEnrollDate(new Date());
@@ -70,7 +71,7 @@ public class PrimaryKeyMappingTests {
         Member member2 = new Member();
         member2.setMemberId("user02");
         member2.setMemberPwd("pass02");
-        member2.setNickname("유관순");
+        member2.setNickName("유관순");
         member2.setPhone("010-1234-5678");
         member2.setAddress("서울시 종로구");
         member2.setEnrollDate(new Date());
@@ -85,16 +86,11 @@ public class PrimaryKeyMappingTests {
         entityTransaction.commit();
 
         //then
-        String jpql = "SELECT A.memberNo FROM menber_section03_subsection01 A";
-        List<Integer> memberNoList = entityManager.createQuery(jpql, Integer.class).getResultList();
+        String jpql = "SELECT A.memberNo FROM member_section03_subsection01 A";
+        List<Integer> memberNoList = entityManager.createQuery(jpql, Integer.class/*pk는 null일 수 없기에 int로 */).getResultList();
 
         memberNoList.forEach(System.out::println);
 
     }
-
-
-
-
-
 
 }

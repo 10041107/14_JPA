@@ -38,7 +38,7 @@ public class OneToManyAssocationTests {
 //    void 일대다_연관관계_객체_그래프_탐색을_이용한_조회_테스트(){
 //        int categoryCode = 10;
 //
-//        CategoryAndMenu categoryAndMenu = entityManager.find(CategoryAndMenu.class, categoryCode);
+//        Category categoryAndMenu = entityManager.find(Category.class, categoryCode);
 //
 //        //then
 //        Assertions.assertNotNull(categoryAndMenu);
@@ -48,7 +48,7 @@ public class OneToManyAssocationTests {
 //
 //    @Test
 //    void 일대다_연관관계_객체_삽입_테스트(){
-//        CategoryAndMenu categoryAndMenu = new CategoryAndMenu();
+//        Category categoryAndMenu = new Category();
 //        categoryAndMenu.setCategoryCode(902);
 //        categoryAndMenu.setCategoryName("일대다 카테고리");
 //        categoryAndMenu.setRefCategoryCode(null);
@@ -72,7 +72,7 @@ public class OneToManyAssocationTests {
 //        transaction.begin();
 //        entityManager.persist(categoryAndMenu);
 //        transaction.commit();
-//        CategoryAndMenu foundCategoryMenu = entityManager.find(CategoryAndMenu.class, 902);
+//        Category foundCategoryMenu = entityManager.find(Category.class, 902);
 //        System.out.println(foundCategoryMenu);
 //
 //    }

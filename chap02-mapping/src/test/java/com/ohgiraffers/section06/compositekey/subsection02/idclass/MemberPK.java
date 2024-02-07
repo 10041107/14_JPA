@@ -1,23 +1,20 @@
 package com.ohgiraffers.section06.compositekey.subsection02.idclass;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class MemberPK implements Serializable {
+// 임베드 될 수 있는 복합키 타입을 지정할 때 사용하는 어노테이션      2개의 pk를 생성할 수 있음
+public class MemberPk implements Serializable {
 
-    @Column(name = "member_no")
     private int memberNo;
 
-    @Column(name = "member_id")
     private String memberId;
 
-    public MemberPK() {
+    public MemberPk() {
     }
 
-    public MemberPK(int memberNo, String memberId) {
+    public MemberPk(int memberNo, String memberId) {
         this.memberNo = memberNo;
         this.memberId = memberId;
     }
@@ -37,25 +34,23 @@ public class MemberPK implements Serializable {
     public void setMemberId(String memberId) {
         this.memberId = memberId;
     }
-
-    @Override
-    public String toString() {
-        return "MemberPK{" +
-                "memberNo=" + memberNo +
-                ", memberId='" + memberId + '\'' +
-                '}';
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MemberPK memberPK = (MemberPK) o;
-        return memberNo == memberPK.memberNo && Objects.equals(memberId, memberPK.memberId);
+        MemberPk memberPk = (MemberPk) o;
+        return memberNo == memberPk.memberNo && Objects.equals(memberId, memberPk.memberId);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(memberNo, memberId);
+    }
+
+    @Override
+    public String toString() {
+        return "MemberPk{" +
+                "memberNo=" + memberNo +
+                ", memberId='" + memberId + '\'' +
+                '}';
     }
 }

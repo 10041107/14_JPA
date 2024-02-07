@@ -56,7 +56,7 @@ public class Category {
 
     @Override
     public String toString() {
-        return "CategoryAndMenu{" +
+        return "Category{" +
                 "categoryCode=" + categoryCode +
                 ", categoryName='" + categoryName + '\'' +
                 ", refCategoryCode='" + refCategoryCode + '\'' +
