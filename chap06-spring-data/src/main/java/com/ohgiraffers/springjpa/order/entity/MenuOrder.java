@@ -1,6 +1,9 @@
-package com.ogiraffers.springdata.order.entity;
+package com.ohgiraffers.springjpa.order.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ohgiraffers.springjpa.menu.entity.Menu;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,7 +11,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "tbl_order")
-
 public class MenuOrder {
 
     @Id
@@ -19,17 +21,12 @@ public class MenuOrder {
     @Column(name = "menu_code", nullable = false)
     private Integer menu;
 
-    //메뉴를 생성하면서 주문번호를 생성하게함
     @Column(name = "order_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
 
-
-    //결제 성공하고 새로 요청했을때 주문서가 새로 생성되는게 아닌
-    // 성공했을때, 실패했을때 이력을 하나의 주문서로 처리하기 위함
-    // => "주문하기"를 누르면 주문서가 생성됨.
-    // =>잔액부족으로 취소됨 : 주문이 취소되는게 아니고 다시 결제하라고 *보류됨* => 주문서가 아직 유효함
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "menuOrder")
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "menuOrder")   // 연관관계의 주인은 payments지만 order가 생겨야 결제가 발생하기 때문에 여기가 생성의 주체가 됨.
     private List<Payments> payments = new ArrayList<>();
 
     public MenuOrder() {
@@ -78,7 +75,6 @@ public class MenuOrder {
     public String toString() {
         return "MenuOrder{" +
                 "orderCode=" + orderCode +
-                ", menu=" + menu +
                 ", orderDate=" + orderDate +
                 ", payments=" + payments +
                 '}';
